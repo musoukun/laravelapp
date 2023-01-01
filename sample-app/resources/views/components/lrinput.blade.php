@@ -1,11 +1,19 @@
+{{-- 初期値 --}}
 @props([
-    'LidName' => '',
-    'RidName' => '',
+    'Leftid' => '',
+    'Rightid' => '',
+
     'lplaceholder' => '',
     'rplaceholder' => '',
+
     'labelsize' => '1/4',
     'formsize' => '1/2',
+
     'label' => '',
+    'leftlabel' => '',
+    'rightlabel' => '',
+    //左右のマージン
+    'margin' => '',
 ])
 {{-- gapはグリッドとフレックスボックスのアイテム間の間隔を制御します。 --}}
 {{-- mbはmargin bottom　アイテムの下部の感覚を制御します。 --}}
@@ -20,13 +28,24 @@
         <x-label label="{{ $label }}"></x-label>
     </div>
     <div {{ $attributes->merge(['class' => 'flex basis-' . $formsize]) }}>
-        <input type="text" {{ empty($LidName) ? null : $attributes->merge(['name' => $LidName, 'id' => $LidName]) }}
-            class="mr-8 h-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="{{ $lplaceholder }}" required>
-        {{-- IdNameが入力されてたら反映して、されていなかったらidとnameを入力しない --}}
-        <input type="text" {{ empty($RidName) ? null : $attributes->merge(['name' => $RidName, 'id' => $RidName]) }}
-            class="h-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="{{ $rplaceholder }}" required>
+        <div {{ empty($margin) ? null : $attributes->merge(['class' => 'mr-' . $margin]) }}>
+            @isset($leftlabel)
+                <x-label label="{{ $leftlabel }}"></x-label>
+            @endisset
+            <input type="text" {{ empty($Leftid) ? null : $attributes->merge(['name' => $Leftid, 'id' => $Leftid]) }}
+                class="h-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="{{ $lplaceholder }}" required>
+            {{-- IdNameが入力されてたら反映して、されていなかったらidとnameを入力しない --}}
+        </div>
+        <div>
+            @isset($rightlabel)
+                <x-label label="{{ $rightlabel }}"></x-label>
+            @endisset
+            <input type="text"
+                {{ empty($Rightid) ? null : $attributes->merge(['name' => $Rightid, 'id' => $Rightid]) }}
+                class="h-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="{{ $rplaceholder }}" required>
+        </div>
     </div>
 
 </div>
